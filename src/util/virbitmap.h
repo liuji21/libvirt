@@ -28,6 +28,11 @@
 
 # include <sys/types.h>
 
+struct _virBitmap {
+    size_t max_bit;
+    size_t map_len;
+    unsigned long *map;
+};
 
 typedef struct _virBitmap virBitmap;
 typedef virBitmap *virBitmapPtr;
@@ -40,7 +45,13 @@ virBitmapPtr virBitmapNew(size_t size) ATTRIBUTE_RETURN_CHECK;
 /*
  * Free previously allocated bitmap
  */
-void virBitmapFree(virBitmapPtr bitmap);
+#define virBitmapFree(bitmap) \
+    do { \
+        if (bitmap) { \
+            VIR_FREE((bitmap)->map); \
+            VIR_FREE(bitmap); \
+        } \
+    } while (0);
 
 /*
  * Copy all bits from @src to @dst. The bitmap sizes
