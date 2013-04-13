@@ -312,15 +312,40 @@
     %define with_storage 0
 %endif
 
+#litevirt override
 
-# Force QEMU to run as non-root
-%if 0%{?fedora} >= 12 || 0%{?rhel} >= 6
-    %define qemu_user  qemu
-    %define qemu_group  qemu
-%else
-    %define qemu_user  root
-    %define qemu_group  root
-%endif
+#litevirt force libvirt run as root
+%define qemu_user  root
+%define qemu_group  root
+
+#libvirt storage support override for litevirt
+%define with_storage 1
+%define with_storage_fs 1
+%define with_storage_lvm 1
+%define with_storage_iscsi 1
+%define with_storage_mpath 1
+%define with_storage_disk 1
+%define with_storage_rbd 0
+%define with_storage_sheepdog 0
+
+#libvirt hypervisor support override for litevirt
+%define with_xen 0
+%define with_lxc 0
+%define with_openvz 0
+%define with_vbox 0
+%define with_uml 0
+%define with_phyp 0
+%define with_vmware 0
+%define with_xenapi 0
+%define with_libxl 0
+%define with_hyperv 0
+%define with_parallels 0
+%define with_qemu_tcg 0
+
+#libvirt misc support override for litevirt
+%define with_selinux 0
+%define with_sanlock 0
+%define with_firewalld 0
 
 
 # The RHEL-5 Xen package has some feature backports. This
@@ -394,6 +419,7 @@ BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: gettext-devel
 BuildRequires: libtool
+BuildRequires: /usr/bin/pod2man
 %endif
 BuildRequires: python-devel
 %if %{with_systemd}
@@ -1941,6 +1967,7 @@ fi
 %{_datadir}/libvirt/schemas/storagevol.rng
 
 %{_datadir}/libvirt/cpu_map.xml
+%{_datadir}/libvirt/libvirtLogo.png
 
 %if %{with_systemd}
 %{_unitdir}/libvirt-guests.service
