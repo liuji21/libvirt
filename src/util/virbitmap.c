@@ -38,13 +38,6 @@
 #include "count-one-bits.h"
 
 
-struct _virBitmap {
-    size_t max_bit;
-    size_t map_len;
-    unsigned long *map;
-};
-
-
 #define VIR_BITMAP_BITS_PER_UNIT  ((int) sizeof(unsigned long) * CHAR_BIT)
 #define VIR_BITMAP_UNIT_OFFSET(b) ((b) / VIR_BITMAP_BITS_PER_UNIT)
 #define VIR_BITMAP_BIT_OFFSET(b)  ((b) % VIR_BITMAP_BITS_PER_UNIT)
@@ -83,21 +76,6 @@ virBitmapPtr virBitmapNew(size_t size)
     bitmap->map_len = sz;
     return bitmap;
 }
-
-/**
- * virBitmapFree:
- * @bitmap: previously allocated bitmap
- *
- * Free @bitmap previously allocated by virBitmapNew.
- */
-void virBitmapFree(virBitmapPtr bitmap)
-{
-    if (bitmap) {
-        VIR_FREE(bitmap->map);
-        VIR_FREE(bitmap);
-    }
-}
-
 
 int virBitmapCopy(virBitmapPtr dst, virBitmapPtr src)
 {
