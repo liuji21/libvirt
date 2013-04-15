@@ -683,9 +683,9 @@ Requires: util-linux
 # For pool-build probing for existing pools
 BuildRequires: libblkid-devel >= 2.17
 # For glusterfs
-        %if 0%{?fedora} >= 11
-Requires: glusterfs-client >= 2.0.1
-        %endif
+#        %if 0%{?fedora} >= 11
+#Requires: glusterfs-client >= 2.0.1
+#        %endif
     %endif
     %if %{with_qemu}
 # From QEMU RPMs
