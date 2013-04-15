@@ -1967,7 +1967,7 @@ fi
 %{_datadir}/libvirt/schemas/storagevol.rng
 
 %{_datadir}/libvirt/cpu_map.xml
-%{_datadir}/libvirt/libvirtLogo.png
+#%{_datadir}/libvirt/libvirtLogo.png
 
 %if %{with_systemd}
 %{_unitdir}/libvirt-guests.service
